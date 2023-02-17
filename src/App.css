@@ -1,9 +1,6 @@
 #root {
   width: 100%;
 }
-.card {
-  padding: 2em;
-}
 
 section {
   margin: 0 auto;
@@ -11,6 +8,14 @@ section {
   padding: 2rem;
 }
 
+/* Tailwind overrides */
+a {
+  color: inherit !important;
+  text-decoration: underline !important;
+}
+
+
+/* React flow overrides */
 .react-flow__node {
   width: auto !important;
 }

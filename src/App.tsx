@@ -28,7 +28,8 @@ function App() {
 
   function onSubmit(){
     const n = [...sequences];
-    n.push(sequence);
+    const stripped = sequence.replace(/\W/g, '');
+    n.push(stripped);
     setSequences(n);
     setSequence('');
   }
@@ -44,17 +45,18 @@ function App() {
   })
 
   return (
-    <div className="App">
+    <>
       <section className='text-center'>
         <h1>pseudo-a-line, meant</h1>
-        <div className="card">
-          <input className="input mx-2" value={k} type="number" onChange={onKChange} />
-          <button className="btn btn-blue" onClick={onSubmit}>Set K</button>
-          <input className="input mx-2" value={sequence} onChange={onSequenceChange} />
-          <button className="btn btn-blue" onClick={onSubmit}>Add Sequence</button>
+        <div className="m-2">
+          <input className="input m-2" value={k} type="number" onChange={onKChange} />
+          <button className="btn btn-blue" onClick={onSubmit}>change k</button>
+          <br />
+          <input className="input m-2" value={sequence} onChange={onSequenceChange} />
+          <button className="btn btn-blue" onClick={onSubmit}>add sequence</button>
         </div>
       </section>
-      {sequences.length > 0 && <>
+      {sequences.length === 0 ? <section className='text-center'>add a sequence, like ACATGTCCAGTC</section> : <>
         <div style={{ height: 500 }}>
           <NodeGraph processedSequences={processedSequences} key={sequences.toString() + k} />
         </div>
@@ -62,7 +64,11 @@ function App() {
           <SequenceTable processedSequences={processedSequences} k={k} />
         </section>
       </>}
-    </div>
+      <hr />
+      <section>
+        <footer>on <a href="https://github.com/mattxwang/pseudo-a-line">github</a>; made by <a href="https://matthewwang.me/">matt</a> with <a href="https://reactjs.org/">react</a> + <a href="https://vitejs.dev/">vite</a>, <a href="https://tailwindcss.com/">tailwind</a>, <a href="https://reactflow.dev/">react flow</a></footer>
+      </section>
+    </>
   )
 }
 

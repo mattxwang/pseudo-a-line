@@ -2,6 +2,7 @@ import ReactFlow, {
   Background,
   Controls,
   MarkerType,
+  Position,
   useNodesState,
   useEdgesState,
 } from 'reactflow';
@@ -13,7 +14,13 @@ import type { ProcessedSequence } from './App';
 import { setUnion } from './util';
 
 function kmerToNode(kmer: string, i: number): Node<{label: string}> {
-  return ({ id: kmer, position: { x: i * 100, y: i * 50 }, data: { label: kmer } });
+  return ({
+    id: kmer,
+    position: { x: i * 100, y: i * 25 },
+    data: { label: kmer },
+    sourcePosition: Position.Right,
+    targetPosition: Position.Left,
+  });
 }
 
 type IndexedHop = {
