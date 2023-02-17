@@ -1,26 +1,17 @@
 import { useState } from 'react'
 import './App.css'
 
-function getKmers(sequence: string, k: number): Set<string> {
-  const res = new Set<string>();
+import NodeGraph from './NodeGraph';
+import { getKmers } from './util';
 
-  if (sequence.length < k) {
-    return res;
-  }
-
-  for (let i = 0; i < (sequence.length - k) + 1; i++) {
-    res.add(sequence.substring(i, i + k));
-  }
-  return res;
-}
-
-type SequenceProps = {
+export type ProcessedSequence = {
   sequence: string,
   k: number,
   kmers: Set<string>,
+  hopMap: { [kmer: string] : Set<string>; },
 }
 
-function Sequence({sequence, k, kmers}: SequenceProps) {
+function Sequence({sequence, kmers}: ProcessedSequence) {
   return (
     <tr>
       <td>{sequence}</td>
@@ -54,11 +45,13 @@ function App() {
   }
 
   const processedSequences = sequences.map(sequence => {
+    const {kmers, hopMap} = getKmers(sequence, k);
     return ({
-      sequence: sequence,
-      k: k,
-      kmers: getKmers(sequence, k),
-    } as SequenceProps)
+      sequence,
+      k,
+      kmers,
+      hopMap,
+    } as ProcessedSequence)
   })
 
   return (
@@ -70,6 +63,9 @@ function App() {
         <input className="input mx-2" value={sequence} onChange={onSequenceChange} />
         <button className="btn btn-blue" onClick={onSubmit}>Add Sequence</button>
       </div>
+      {sequences.length > 0 && <div style={{ height: 500 }}>
+        <NodeGraph processedSequences={processedSequences} />
+      </div>}
       <table className='text-left'>
         <thead>
           <tr>
