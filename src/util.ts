@@ -1,4 +1,6 @@
-export function getKmers(sequence: string, k: number): { kmers: Set<string>, hopMap: { [kmer: string] : Set<string>; }} {
+export type HopMap = { [kmer: string] : Set<string>; };
+
+export function getKmers(sequence: string, k: number): { kmers: Set<string>, hopMap: HopMap} {
   if (sequence.length < k) {
     return ({
       kmers: new Set<string>(),
@@ -6,7 +8,7 @@ export function getKmers(sequence: string, k: number): { kmers: Set<string>, hop
     })
   }
 
-  const hopMap : { [kmer: string] : Set<string>; } = {};
+  const hopMap : HopMap = {};
 
   let current = sequence.substring(0, k);
   for (let i = 1; i < (sequence.length - k) + 2; i++) {
@@ -30,5 +32,6 @@ export function getKmers(sequence: string, k: number): { kmers: Set<string>, hop
 }
 
 export function setUnion<T>(...sets: Set<T>[]): Set<T> {
-  return new Set(...sets);
+  // TODO: this is inefficient
+  return new Set(Array.from(sets).map(set => Array.from(set)).flat());
 }

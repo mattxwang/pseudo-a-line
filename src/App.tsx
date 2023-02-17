@@ -2,26 +2,15 @@ import { useState } from 'react'
 import './App.css'
 
 import NodeGraph from './NodeGraph';
+import SequenceTable from './SequenceTable';
 import { getKmers } from './util';
+import type { HopMap } from './util';
 
 export type ProcessedSequence = {
   sequence: string,
   k: number,
   kmers: Set<string>,
-  hopMap: { [kmer: string] : Set<string>; },
-}
-
-function Sequence({sequence, kmers}: ProcessedSequence) {
-  return (
-    <tr>
-      <td>{sequence}</td>
-      <td>
-        <ul className='inline'>
-          {Array.from(kmers).map(key => <li className="inline border-2 border-blue-500 rounded-lg p-1.5 m-1.5" key={key}>{key}</li>)}
-        </ul>
-      </td>
-    </tr>
-  )
+  hopMap: HopMap,
 }
 
 function App() {
@@ -56,27 +45,23 @@ function App() {
 
   return (
     <div className="App">
-      <h1>pseudo-a-line, meant</h1>
-      <div className="card">
-        <input className="input mx-2" value={k} type="number" onChange={onKChange} />
-        <button className="btn btn-blue" onClick={onSubmit}>Set K</button>
-        <input className="input mx-2" value={sequence} onChange={onSequenceChange} />
-        <button className="btn btn-blue" onClick={onSubmit}>Add Sequence</button>
-      </div>
-      {sequences.length > 0 && <div style={{ height: 500 }}>
-        <NodeGraph processedSequences={processedSequences} />
-      </div>}
-      <table className='text-left'>
-        <thead>
-          <tr>
-            <th>sequence</th>
-            <th>{k}-mers</th>
-          </tr>
-        </thead>
-        <tbody>
-          {processedSequences.map(processedSequence => <Sequence key={processedSequence.sequence} {...processedSequence} />)}
-        </tbody>
-      </table>
+      <section className='text-center'>
+        <h1>pseudo-a-line, meant</h1>
+        <div className="card">
+          <input className="input mx-2" value={k} type="number" onChange={onKChange} />
+          <button className="btn btn-blue" onClick={onSubmit}>Set K</button>
+          <input className="input mx-2" value={sequence} onChange={onSequenceChange} />
+          <button className="btn btn-blue" onClick={onSubmit}>Add Sequence</button>
+        </div>
+      </section>
+      {sequences.length > 0 && <>
+        <div style={{ height: 500 }}>
+          <NodeGraph processedSequences={processedSequences} key={sequences.toString() + k} />
+        </div>
+        <section>
+          <SequenceTable processedSequences={processedSequences} k={k} />
+        </section>
+      </>}
     </div>
   )
 }
