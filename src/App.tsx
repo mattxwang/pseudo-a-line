@@ -1,37 +1,22 @@
 import { useState } from 'react'
 import './App.css'
 
+import InputForm from './InputForm';
 import NodeGraph from './NodeGraph';
 import SequenceTable from './SequenceTable';
-import { getKmers } from './util';
-import type { HopMap } from './util';
+import { generateAnnotatedHops, generateIndexedHops, getKmers, setUnion } from './util';
+import type { ProcessedSequence } from './util';
 
-export type ProcessedSequence = {
-  sequence: string,
-  k: number,
-  kmers: Set<string>,
-  hopMap: HopMap,
-}
+const DEFAULT_SEQUENCE = "ACATGTCCAGTC";
 
 function App() {
   const [k, setK] = useState<number>(3);
-  const [sequence, setSequence] = useState<string>('');
   const [sequences, setSequences] = useState<string[]>([]);
 
-  function onKChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setK(Number(e.target.value));
-  }
-
-  function onSequenceChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setSequence(e.target.value);
-  }
-
-  function onSubmit(){
+  function addSequence(sequence: string) {
     const n = [...sequences];
-    const stripped = sequence.replace(/\W/g, '');
-    n.push(stripped);
+    n.push(sequence);
     setSequences(n);
-    setSequence('');
   }
 
   const processedSequences = sequences.map(sequence => {
@@ -42,23 +27,24 @@ function App() {
       kmers,
       hopMap,
     } as ProcessedSequence)
-  })
+  });
+
+  const indexedHops = generateIndexedHops(processedSequences);
+  const annotatedHops = generateAnnotatedHops(indexedHops);
+  const kmers = setUnion(...(processedSequences.map(processedSequence => processedSequence.kmers)));
 
   return (
     <>
       <section className='text-center'>
         <h1>pseudo-a-line, meant</h1>
-        <div className="m-2">
-          <input className="input m-2" value={k} type="number" onChange={onKChange} />
-          <button className="btn btn-blue" onClick={onSubmit}>change k</button>
-          <br />
-          <input className="input m-2" value={sequence} onChange={onSequenceChange} />
-          <button className="btn btn-blue" onClick={onSubmit}>add sequence</button>
-        </div>
+        <InputForm k={k} setK={setK} addSequence={addSequence} />
       </section>
-      {sequences.length === 0 ? <section className='text-center'>add a sequence, like ACATGTCCAGTC</section> : <>
+      {sequences.length === 0 ?
+        <section className='text-center'>start by adding a sequence, like{' '}
+          <button onClick={() => addSequence(DEFAULT_SEQUENCE)}>{DEFAULT_SEQUENCE}</button>
+        </section> : <>
         <div style={{ height: 500 }}>
-          <NodeGraph processedSequences={processedSequences} key={sequences.toString() + k} />
+          <NodeGraph annotatedHops={annotatedHops} kmers={kmers} key={sequences.toString() + k} />
         </div>
         <section>
           <SequenceTable processedSequences={processedSequences} k={k} />

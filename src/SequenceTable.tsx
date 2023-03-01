@@ -1,4 +1,4 @@
-import type { ProcessedSequence } from './App';
+import type { ProcessedSequence } from './util';
 
 type Props = {
   k: number,
