@@ -4,8 +4,9 @@ import './App.css'
 import InputForm from './InputForm';
 import NodeGraph from './NodeGraph';
 import SequenceTable from './SequenceTable';
-import { generateAnnotatedHops, generateIndexedHops, getKmers, setUnion } from './util';
+import { generateAnnotatedHops, generateIndexedHops, getEquivalenceClasses, getKmers, setUnion } from './util';
 import type { ProcessedSequence } from './util';
+import EquivalenceClassCircles from './EquivalenceClassCircles';
 
 const DEFAULT_SEQUENCE = "ACATGTCCAGTC";
 
@@ -33,6 +34,21 @@ function App() {
   const annotatedHops = generateAnnotatedHops(indexedHops);
   const kmers = setUnion(...(processedSequences.map(processedSequence => processedSequence.kmers)));
 
+  const GetStarted = () => (
+    <section className='text-center'>start by adding a sequence, like{' '}
+      <button onClick={() => addSequence(DEFAULT_SEQUENCE)}>{DEFAULT_SEQUENCE}</button>
+    </section>
+  );
+
+  const EquivalenceClasses = () => <>
+    {
+      Array
+        .from(getEquivalenceClasses(annotatedHops))
+        .map(eq => JSON.parse(eq)) // TODO: this is fragile
+        .map(seqs => <EquivalenceClassCircles key={String(seqs)} classes='w-16 h-16 text-lg font-bold' offset={24} seqs={seqs}/>)
+    }
+  </>
+
   return (
     <>
       <section className='text-center'>
@@ -40,13 +56,14 @@ function App() {
         <InputForm k={k} setK={setK} addSequence={addSequence} />
       </section>
       {sequences.length === 0 ?
-        <section className='text-center'>start by adding a sequence, like{' '}
-          <button onClick={() => addSequence(DEFAULT_SEQUENCE)}>{DEFAULT_SEQUENCE}</button>
-        </section> : <>
+        <GetStarted /> : <>
         <div style={{ height: 500 }}>
           <NodeGraph annotatedHops={annotatedHops} kmers={kmers} key={sequences.toString() + k} />
         </div>
         <section>
+          <h2 className="text-lg mb-2">equivalence classes</h2>
+          <EquivalenceClasses />
+          <hr className="my-3" />
           <SequenceTable processedSequences={processedSequences} k={k} />
         </section>
       </>}

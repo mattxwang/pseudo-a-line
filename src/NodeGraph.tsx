@@ -7,10 +7,11 @@ import ReactFlow, {
   useEdgesState,
 } from 'reactflow';
 
-import type { Edge, Node } from 'reactflow';
+import type { Edge, EdgeTypes, Node } from 'reactflow';
 
 import 'reactflow/dist/style.css';
 import type { AnnotatedHop } from './util';
+import EquivalenceClassEdgeLabel from './EquivalenceClassEdgeLabel';
 
 function kmerToNode(kmer: string, i: number): Node<{label: string}> {
   return ({
@@ -22,10 +23,9 @@ function kmerToNode(kmer: string, i: number): Node<{label: string}> {
   });
 }
 
-function annotatedHopToEdge(source: string, target: string, seqs: number[]) : Edge<string> {
+function annotatedHopToEdge(source: string, target: string, seqs: number[]) : Edge<{seqs: number[]}> {
   return ({
     id: `${source}-${target}`,
-    label: seqs.join('|'),
     source,
     target,
     markerEnd: {
@@ -36,8 +36,16 @@ function annotatedHopToEdge(source: string, target: string, seqs: number[]) : Ed
     style: {
       strokeWidth: 2,
     },
+    data: {
+      seqs,
+    },
+    type: 'custom',
   });
 }
+
+const edgeTypes: EdgeTypes = {
+  custom: EquivalenceClassEdgeLabel,
+};
 
 type Props = {
   annotatedHops: AnnotatedHop[],
@@ -55,6 +63,7 @@ export default function NodeGraph({annotatedHops, kmers}: Props) {
       edges={edges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
+      edgeTypes={edgeTypes}
       fitView
       // note: if we ever make money from this, we should remove this;
       // see: https://reactflow.dev/docs/guides/remove-attribution/

@@ -13,8 +13,8 @@
 		@apply bg-blue-700;
 	}
 
-	.large-circle {
-		@apply w-36 h-36 rounded-full flex justify-center items-center text-center p-5 shadow-xl;
+  .seq-circle {
+		@apply w-8 h-8 rounded-full inline-flex justify-center items-center text-center p-2.5 shadow-xl;
 	}
 
 	a {

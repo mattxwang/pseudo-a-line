@@ -19,6 +19,19 @@ export type AnnotatedHop = {
   seqs: number[],
 }
 
+export type EquivalenceClass = {
+  name: string,
+  color: string,
+}
+
+
+const SEQUENCE_COLORS = [
+  '#05A3FF',
+  '#EF60A7',
+  '#FAB900',
+  '#61D738',
+]
+
 /**
  * flatten all hops into singular list with sequence index
  * @param sequences pre-processed sequences (from getKmers)
@@ -63,6 +76,16 @@ export function generateAnnotatedHops(hops: IndexedHop[]): AnnotatedHop[] {
 }
 
 /**
+ * finds unique equivalence classes and (within reason) assigns them a unique color
+ * for now: rather brittle (relies on JSON.stringify to uniquify eq classes)
+ * @param hops
+ * @returns
+ */
+export function getEquivalenceClasses(hops: AnnotatedHop[]): Set<string> {
+  return new Set<string>(hops.map(hop => JSON.stringify(hop.seqs))); // TODO: this is fragile
+}
+
+/**
  * take in a sequence and k, return a set of all kmers
  * and a HopMap that describes all 1-transitions
  * @param {string} sequence input sequence; length should be >= k
@@ -97,6 +120,11 @@ export function getKmers(sequence: string, k: number): { kmers: Set<string>, hop
     kmers: new Set(Object.keys(hopMap)),
     hopMap
   }
+}
+
+export function getSequenceColor(i: number): string {
+  const l = SEQUENCE_COLORS.length;
+  return SEQUENCE_COLORS[i % l];
 }
 
 export function setUnion<T>(...sets: Set<T>[]): Set<T> {
