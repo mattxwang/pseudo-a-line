@@ -35,10 +35,10 @@ function App() {
   const GetStarted = () => (
     <section className='text-center'>
       start by adding a sequence, like{' '}
-      <button onClick={() => addSequences([DEFAULT_SEQUENCE])}>{DEFAULT_SEQUENCE}</button>
+      <button className='underline' onClick={() => addSequences([DEFAULT_SEQUENCE])}>{DEFAULT_SEQUENCE}</button>
       <br />
-      or enter a series of sequences, like{' '}
-      <button onClick={() => addSequences([DEFAULT_SEQUENCE, DEFAULT_SEQUENCE.slice(3,8)])}>{`${DEFAULT_SEQUENCE}; ${DEFAULT_SEQUENCE.slice(3,8)}`}</button>
+      or enter a series of sequences separated by semicolons, like{' '}
+      <button className='underline' onClick={() => addSequences([DEFAULT_SEQUENCE, DEFAULT_SEQUENCE.slice(3,8)])}>{`${DEFAULT_SEQUENCE}; ${DEFAULT_SEQUENCE.slice(3,8)}`}</button>
     </section>
   );
 
@@ -47,14 +47,14 @@ function App() {
       Array
         .from(getEquivalenceClasses(annotatedHops))
         .map(eq => JSON.parse(eq)) // TODO: this is fragile
-        .map(seqs => <EquivalenceClassCircles key={String(seqs)} classes='w-16 h-16 text-lg font-bold' offset={24} seqs={seqs}/>)
+        .map(seqs => <EquivalenceClassCircles key={String(seqs)} classes='w-16 h-16 text-xl font-bold' offset={24} seqs={seqs}/>)
     }
   </div>
 
   return (
     <>
       <section className='text-center'>
-        <h1>pseudo-a-line, meant</h1>
+        <h1 className="text-5xl pb-2">pseudo-a-line, meant</h1>
         <InputForm k={k} setK={setK} addSequences={addSequences} />
       </section>
       {sequences.length === 0 ?

@@ -1,3 +1,6 @@
+import type { EdgeTypes } from "reactflow";
+import EquivalenceClassEdgeLabel from "./EquivalenceClassEdgeLabel";
+
 export type HopMap = { [kmer: string] : Set<string>; };
 
 export type ProcessedSequence = {
@@ -19,10 +22,9 @@ export type AnnotatedHop = {
   seqs: number[],
 }
 
-export type EquivalenceClass = {
-  name: string,
-  color: string,
-}
+export const edgeTypes: EdgeTypes = {
+  custom: EquivalenceClassEdgeLabel,
+};
 
 
 const SEQUENCE_COLORS = [

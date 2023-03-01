@@ -16,6 +16,6 @@ export default function EquivalenceClassCircles({classes, offset, seqs}: Props) 
                 .join(', '),
     marginRight: `${seqs.length * spacing}px`
   }}>
-    {`{${seqs.map(seq => seq + 1).join(',')}}`}
+    {`${seqs.map(seq => seq + 1).join(',')}`}
   </div>
 }

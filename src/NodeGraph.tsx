@@ -7,11 +7,11 @@ import ReactFlow, {
   useEdgesState,
 } from 'reactflow';
 
-import type { Edge, EdgeTypes, Node } from 'reactflow';
+import type { Edge, Node } from 'reactflow';
 
 import 'reactflow/dist/style.css';
 import type { AnnotatedHop } from './util';
-import EquivalenceClassEdgeLabel from './EquivalenceClassEdgeLabel';
+import { edgeTypes } from './util';
 
 function kmerToNode(kmer: string, i: number): Node<{label: string}> {
   return ({
@@ -42,10 +42,6 @@ function annotatedHopToEdge(source: string, target: string, seqs: number[]) : Ed
     type: 'custom',
   });
 }
-
-const edgeTypes: EdgeTypes = {
-  custom: EquivalenceClassEdgeLabel,
-};
 
 type Props = {
   annotatedHops: AnnotatedHop[],

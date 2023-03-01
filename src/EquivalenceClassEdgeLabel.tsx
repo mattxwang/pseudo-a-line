@@ -31,7 +31,7 @@ const CustomEdge: FC<EdgeProps> = ({
         <div style={{
           position: 'absolute',
           transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-          fontSize: 8,
+          fontSize: 10,
         }}>
           <EquivalenceClassCircles seqs={seqs}/>
         </div>
