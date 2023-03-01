@@ -3,15 +3,19 @@ import { useState } from 'react'
 type Props = {
   k: number;
   setK: (k: number) => void;
-  addSequence: (seq: string) => void;
+  addSequences: (seq: string[]) => void;
 }
 
 
-export default function InputForm({k, setK, addSequence}: Props) {
+export default function InputForm({k, setK, addSequences}: Props) {
   const [sequence, setSequence] = useState<string>('');
 
   function onKChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setK(Number(e.target.value));
+    const val = Number(e.target.value);
+    if (val < 1) {
+      return;
+    }
+    setK(val);
   }
 
   function onSequenceChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -19,16 +23,18 @@ export default function InputForm({k, setK, addSequence}: Props) {
   }
 
   function onSubmit(){
-    const stripped = sequence.replace(/\W/g, '');
-    addSequence(stripped);
+    const parsed = sequence
+      .split(';')
+      .map(seq => seq.replace(/\W/g, ''))
+    console.log(parsed)
+    addSequences(parsed);
     setSequence('');
   }
 
   return (
-    <div className="m-2">
+    <div className="my-2">
       <input className="input m-2" value={k} type="number" onChange={onKChange} />
-      <button className="btn btn-blue" onClick={onSubmit}>change k</button>
-      <br />
+      <button className="btn btn-blue mr-4" onClick={onSubmit}>set k</button>
       <input className="input m-2" value={sequence} onChange={onSequenceChange} />
       <button className="btn btn-blue" onClick={onSubmit}>add sequence</button>
     </div>

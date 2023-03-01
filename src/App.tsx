@@ -14,10 +14,8 @@ function App() {
   const [k, setK] = useState<number>(3);
   const [sequences, setSequences] = useState<string[]>([]);
 
-  function addSequence(sequence: string) {
-    const n = [...sequences];
-    n.push(sequence);
-    setSequences(n);
+  function addSequences(seqs: string[]) {
+    setSequences(sequences.concat(seqs));
   }
 
   const processedSequences = sequences.map(sequence => {
@@ -35,25 +33,29 @@ function App() {
   const kmers = setUnion(...(processedSequences.map(processedSequence => processedSequence.kmers)));
 
   const GetStarted = () => (
-    <section className='text-center'>start by adding a sequence, like{' '}
-      <button onClick={() => addSequence(DEFAULT_SEQUENCE)}>{DEFAULT_SEQUENCE}</button>
+    <section className='text-center'>
+      start by adding a sequence, like{' '}
+      <button onClick={() => addSequences([DEFAULT_SEQUENCE])}>{DEFAULT_SEQUENCE}</button>
+      <br />
+      or enter a series of sequences, like{' '}
+      <button onClick={() => addSequences([DEFAULT_SEQUENCE, DEFAULT_SEQUENCE.slice(3,8)])}>{`${DEFAULT_SEQUENCE}; ${DEFAULT_SEQUENCE.slice(3,8)}`}</button>
     </section>
   );
 
-  const EquivalenceClasses = () => <>
+  const EquivalenceClasses = () => <div className="mt-2 mb-4">
     {
       Array
         .from(getEquivalenceClasses(annotatedHops))
         .map(eq => JSON.parse(eq)) // TODO: this is fragile
         .map(seqs => <EquivalenceClassCircles key={String(seqs)} classes='w-16 h-16 text-lg font-bold' offset={24} seqs={seqs}/>)
     }
-  </>
+  </div>
 
   return (
     <>
       <section className='text-center'>
         <h1>pseudo-a-line, meant</h1>
-        <InputForm k={k} setK={setK} addSequence={addSequence} />
+        <InputForm k={k} setK={setK} addSequences={addSequences} />
       </section>
       {sequences.length === 0 ?
         <GetStarted /> : <>
@@ -61,9 +63,8 @@ function App() {
           <NodeGraph annotatedHops={annotatedHops} kmers={kmers} key={sequences.toString() + k} />
         </div>
         <section>
-          <h2 className="text-lg mb-2">equivalence classes</h2>
+          <h2 className="text-xl">equivalence classes</h2>
           <EquivalenceClasses />
-          <hr className="my-3" />
           <SequenceTable processedSequences={processedSequences} k={k} />
         </section>
       </>}
