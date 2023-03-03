@@ -4,9 +4,10 @@ import './App.css'
 import InputForm from './InputForm';
 import NodeGraph from './NodeGraph';
 import SequenceTable from './SequenceTable';
-import { generateAnnotatedHops, generateIndexedHops, getEquivalenceClasses, getKmers, setUnion } from './util';
+import { generateAnnotatedHops, generateIndexedHops, getEquivalenceClasses, getKeyedAnnotatedHops, getKmers, setUnion } from './util';
 import type { ProcessedSequence } from './util';
 import EquivalenceClassCircles from './EquivalenceClassCircles';
+import Aligner from './Aligner';
 
 const DEFAULT_SEQUENCE = "ACATGTCCAGTC";
 
@@ -32,6 +33,11 @@ function App() {
   const annotatedHops = generateAnnotatedHops(indexedHops);
   const kmers = setUnion(...(processedSequences.map(processedSequence => processedSequence.kmers)));
 
+  const eqvCls = getEquivalenceClasses(annotatedHops)
+  console.log(eqvCls)
+  // const unifiedHopMap = unifyHopMaps(processedSequences.map(seq => seq.hopMap))
+  const keyedAnnotatedHops = getKeyedAnnotatedHops(annotatedHops)
+
   const GetStarted = () => (
     <section className='text-center'>
       start by adding a sequence, like{' '}
@@ -45,7 +51,7 @@ function App() {
   const EquivalenceClasses = () => <div className="mt-2 mb-4">
     {
       Array
-        .from(getEquivalenceClasses(annotatedHops))
+        .from(eqvCls)
         .map(eq => JSON.parse(eq)) // TODO: this is fragile
         .map(seqs => <EquivalenceClassCircles key={String(seqs)} classes='w-16 h-16 text-xl font-bold' offset={24} seqs={seqs}/>)
     }
@@ -66,6 +72,9 @@ function App() {
           <h2 className="text-xl">equivalence classes</h2>
           <EquivalenceClasses />
           <SequenceTable processedSequences={processedSequences} k={k} />
+        </section>
+        <section>
+          <Aligner k={k} keyedAnnotatedHops={keyedAnnotatedHops} />
         </section>
       </>}
       <hr />

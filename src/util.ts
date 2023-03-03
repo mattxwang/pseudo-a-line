@@ -22,6 +22,11 @@ export type AnnotatedHop = {
   seqs: number[],
 }
 
+export type KeyedAnnotatedHops = { [kmerSource: string] : ({
+  target: string,
+  seqs: number[]
+}[]) }
+
 export const edgeTypes: EdgeTypes = {
   custom: EquivalenceClassEdgeLabel,
 };
@@ -124,6 +129,30 @@ export function getKmers(sequence: string, k: number): { kmers: Set<string>, hop
   }
 }
 
+export function getKeyedAnnotatedHops(hops: AnnotatedHop[]): KeyedAnnotatedHops {
+  const res = {} as KeyedAnnotatedHops
+  for (let hop of hops) {
+    const { source, target, seqs } = hop;
+    if (!(source in res)) {
+      res[source] = []
+    }
+    res[source].push({target, seqs})
+  }
+  return res
+}
+
+export function getOrderedKmers(sequence: string, k: number): string[] {
+  const kmers = [];
+  let current = sequence.substring(0, k);
+  for (let i = 1; i < (sequence.length - k) + 2; i++) {
+    kmers.push(current);
+    let next = sequence.substring(i, i + k);
+    current = next;
+  }
+
+  return kmers;
+}
+
 export function getSequenceColor(i: number): string {
   const l = SEQUENCE_COLORS.length;
   return SEQUENCE_COLORS[i % l];
@@ -133,3 +162,16 @@ export function setUnion<T>(...sets: Set<T>[]): Set<T> {
   // TODO: this is inefficient
   return new Set(Array.from(sets).map(set => Array.from(set)).flat());
 }
+
+// export function unifyAnnotatedHopMaps(maps: KeyedAnnotatedHops[]) : KeyedAnnotatedHops {
+//   const res = {} as KeyedAnnotatedHops;
+//   for (let map of maps) {
+//     for (let kmer of Object.keys(map)) {
+//       if (!(kmer in res)) {
+//         res[kmer] = []
+//       }
+//       res[kmer] = res[kmer].concat(map[kmer].flat())
+//     }
+//   }
+//   return res;
+// }
