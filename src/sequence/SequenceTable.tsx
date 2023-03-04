@@ -1,5 +1,5 @@
-import Kmer from './Kmer';
-import type { ProcessedSequence } from './util';
+import Kmer from '../ui/Kmer';
+import type { ProcessedSequence } from '../util';
 
 type Props = {
   k: number,
@@ -18,7 +18,7 @@ export default function SequenceTable({k, processedSequences}: Props){
       </thead>
       <tbody>
         {processedSequences.map((processedSequence, i) =>
-          <tr className='border-b dark:border-gray-700' key={processedSequence.sequence}>
+          <tr className='border-b dark:border-gray-700' key={processedSequence.sequence + i}>
             <td className='px-6 py-3'>{i + 1}</td>
             <td className='px-6 py-3'>{processedSequence.sequence}</td>
             <td className='px-6 py-3'>

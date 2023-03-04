@@ -7,7 +7,7 @@ type Props = {
 }
 
 
-export default function InputForm({k, setK, addSequences}: Props) {
+export default function SequenceInputForm({k, setK, addSequences}: Props) {
   const [sequence, setSequence] = useState<string>('');
 
   function onKChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -25,7 +25,7 @@ export default function InputForm({k, setK, addSequences}: Props) {
   function onSubmit(){
     const parsed = sequence
       .split(';')
-      .map(seq => seq.replace(/\W/g, ''))
+      .map(seq => seq.replace(/\W/g, '').toUpperCase())
     addSequences(parsed);
     setSequence('');
   }

@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import './App.css'
 
-import InputForm from './InputForm';
-import NodeGraph from './NodeGraph';
-import SequenceTable from './SequenceTable';
+import SequenceInputForm from './sequence/SequenceInputForm';
+import NodeGraph from './graph/NodeGraph';
+import SequenceTable from './sequence/SequenceTable';
 import { generateAnnotatedHops, generateIndexedHops, getEquivalenceClasses, getKeyedAnnotatedHops, getKmers, setUnion } from './util';
 import type { ProcessedSequence } from './util';
-import EquivalenceClassCircles from './EquivalenceClassCircles';
+import EquivalenceClassCircles from './ui/EquivalenceClassCircles';
 import Aligner from './Aligner';
 
 const DEFAULT_SEQUENCE = "ACATGTCCAGTC";
@@ -59,7 +58,7 @@ function App() {
     <>
       <section className='text-center'>
         <h1 className="text-5xl pb-2">pseudo-a-line, meant</h1>
-        <InputForm k={k} setK={setK} addSequences={addSequences} />
+        <SequenceInputForm k={k} setK={setK} addSequences={addSequences} />
       </section>
       {sequences.length === 0 ?
         <GetStarted /> : <>
@@ -69,6 +68,7 @@ function App() {
         <section>
           <h2 className="text-xl">equivalence classes</h2>
           <EquivalenceClasses />
+          <h2 className="text-xl mb-1.5">sequence library</h2>
           <SequenceTable processedSequences={processedSequences} k={k} />
         </section>
         <section>

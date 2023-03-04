@@ -10,8 +10,8 @@ import ReactFlow, {
 import type { Edge, Node } from 'reactflow';
 
 import 'reactflow/dist/style.css';
-import type { AnnotatedHop } from './util';
-import { edgeTypes } from './util';
+import type { AnnotatedHop } from '../util';
+import { edgeTypes } from '../util';
 
 function kmerToNode(kmer: string, i: number): Node<{label: string}> {
   return ({

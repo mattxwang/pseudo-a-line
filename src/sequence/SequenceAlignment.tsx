@@ -1,7 +1,7 @@
-import EquivalenceClassCircles from "./EquivalenceClassCircles";
-import Kmer from "./Kmer";
-import type { KeyedAnnotatedHops } from "./util";
-import { getOrderedKmers, setIntersection } from "./util";
+import EquivalenceClassCircles from "../ui/EquivalenceClassCircles";
+import Kmer from "../ui/Kmer";
+import type { KeyedAnnotatedHops } from "../util";
+import { getOrderedKmers, setIntersection } from "../util";
 
 type Props = {
   k: number,
@@ -24,7 +24,7 @@ export default function SequenceAlignment({k, keyedAnnotatedHops, sequence}: Pro
   )
 
   return <div className="border-2 border-gray-200 rounded py-1.5 px-2.5 my-1.5">
-    <h3 className="text-lg my-1.5">sequence: {sequence} | alignments:{' '}
+    <h3 className="text-lg mb-1.5">{sequence} {'-> '}
       <EquivalenceClassCircles seqs={totalAlignment.map(n => Number(n)).flat()}/>
     </h3>
     <hr />
@@ -33,7 +33,7 @@ export default function SequenceAlignment({k, keyedAnnotatedHops, sequence}: Pro
         hopPairs.map(({sourceKmer, targetKmer, seqs}) => {
           return <li className="my-3" key={`${sourceKmer}-${targetKmer}`}>
             <Kmer kmer={sourceKmer}/> {'->'} <Kmer kmer={targetKmer} /> {'-> '}
-            <EquivalenceClassCircles seqs={seqs}/>
+            <EquivalenceClassCircles seqs={seqs} />
           </li>
         })
       }

@@ -1,5 +1,5 @@
 import type { EdgeTypes } from "reactflow";
-import EquivalenceClassEdgeLabel from "./EquivalenceClassEdgeLabel";
+import EquivalenceClassEdgeLabel from "./graph/EquivalenceClassEdgeLabel";
 
 export type HopMap = { [kmer: string] : Set<string>; };
 

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { EdgeProps, getBezierPath, EdgeLabelRenderer } from 'reactflow';
-import EquivalenceClassCircles from './EquivalenceClassCircles';
-import { getSequenceColor } from './util';
+import EquivalenceClassCircles from '../ui/EquivalenceClassCircles';
+import { getSequenceColor } from '../util';
 
 const CustomEdge: FC<EdgeProps> = ({
   id,

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import SequenceAlignment from "./SequenceAlignment"
+import SequenceAlignment from "./sequence/SequenceAlignment"
 import type { KeyedAnnotatedHops } from "./util"
 
 type Props = {
@@ -14,7 +14,7 @@ export default function Aligner({k, keyedAnnotatedHops}: Props) {
   function onSubmit(){
     const parsed = inputSequence
       .split(';')
-      .map(seq => seq.replace(/\W/g, ''))
+      .map(seq => seq.replace(/\W/g, '').toUpperCase())
     setSequences(parsed);
     setInputSequence('');
   }

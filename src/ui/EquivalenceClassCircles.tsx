@@ -1,4 +1,4 @@
-import { getSequenceColor } from "./util";
+import { getSequenceColor } from "../util";
 
 type Props = {
   seqs: number[],
@@ -12,7 +12,7 @@ export default function EquivalenceClassCircles({classes, offset, seqs}: Props) 
   }
 
   const spacing = offset ?? 8;
-  return <span className={`seq-circle ${classes}`} style={{
+  return <span className={`seq-circle ${classes ?? ''}`} style={{
     backgroundColor: getSequenceColor(seqs[0]),
     boxShadow: seqs
                 .slice(1)
