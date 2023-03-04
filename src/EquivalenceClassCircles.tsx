@@ -7,8 +7,12 @@ type Props = {
 }
 
 export default function EquivalenceClassCircles({classes, offset, seqs}: Props) {
+  if (seqs.length === 0) {
+    return <>{'none :('}</>
+  }
+
   const spacing = offset ?? 8;
-  return <div className={`seq-circle ${classes}`} style={{
+  return <span className={`seq-circle ${classes}`} style={{
     backgroundColor: getSequenceColor(seqs[0]),
     boxShadow: seqs
                 .slice(1)
@@ -17,5 +21,5 @@ export default function EquivalenceClassCircles({classes, offset, seqs}: Props) 
     marginRight: `${seqs.length * spacing}px`
   }}>
     {`${seqs.map(seq => seq + 1).join(',')}`}
-  </div>
+  </span>
 }

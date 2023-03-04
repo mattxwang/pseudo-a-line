@@ -16,7 +16,7 @@ import { edgeTypes } from './util';
 function kmerToNode(kmer: string, i: number): Node<{label: string}> {
   return ({
     id: kmer,
-    position: { x: i * 100, y: i * 25 },
+    position: { x: i * 100, y: (i % 4) * 25 + i * 10 },
     data: { label: kmer },
     sourcePosition: Position.Right,
     targetPosition: Position.Left,

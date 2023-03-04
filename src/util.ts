@@ -158,20 +158,17 @@ export function getSequenceColor(i: number): string {
   return SEQUENCE_COLORS[i % l];
 }
 
+export function setIntersection<T>(...sets: Set<T>[]): Set<T> {
+  if (sets.length === 0) { return new Set() }
+  if (sets.length === 1) { return sets[0] }
+
+  // TODO: this is inefficient
+  return Array.from(sets).reduce(((accum, curr) => {
+    return new Set<T>(Array.from(accum.values()).filter(entry => curr.has(entry)));
+  }), sets[0])
+}
+
 export function setUnion<T>(...sets: Set<T>[]): Set<T> {
   // TODO: this is inefficient
   return new Set(Array.from(sets).map(set => Array.from(set)).flat());
 }
-
-// export function unifyAnnotatedHopMaps(maps: KeyedAnnotatedHops[]) : KeyedAnnotatedHops {
-//   const res = {} as KeyedAnnotatedHops;
-//   for (let map of maps) {
-//     for (let kmer of Object.keys(map)) {
-//       if (!(kmer in res)) {
-//         res[kmer] = []
-//       }
-//       res[kmer] = res[kmer].concat(map[kmer].flat())
-//     }
-//   }
-//   return res;
-// }

@@ -26,7 +26,6 @@ export default function InputForm({k, setK, addSequences}: Props) {
     const parsed = sequence
       .split(';')
       .map(seq => seq.replace(/\W/g, ''))
-    console.log(parsed)
     addSequences(parsed);
     setSequence('');
   }

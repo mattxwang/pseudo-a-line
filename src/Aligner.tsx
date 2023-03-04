@@ -15,7 +15,6 @@ export default function Aligner({k, keyedAnnotatedHops}: Props) {
     const parsed = inputSequence
       .split(';')
       .map(seq => seq.replace(/\W/g, ''))
-    console.log(parsed)
     setSequences(parsed);
     setInputSequence('');
   }

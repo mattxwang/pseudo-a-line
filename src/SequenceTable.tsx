@@ -1,3 +1,4 @@
+import Kmer from './Kmer';
 import type { ProcessedSequence } from './util';
 
 type Props = {
@@ -12,7 +13,7 @@ export default function SequenceTable({k, processedSequences}: Props){
         <tr>
           <th className='px-6 py-3'>#</th>
           <th className='px-6 py-3'>sequence</th>
-          <th className='px-6 py-3'>{k}-mers</th>
+          <th className='px-6 py-3'>distinct {k}-mers</th>
         </tr>
       </thead>
       <tbody>
@@ -22,9 +23,7 @@ export default function SequenceTable({k, processedSequences}: Props){
             <td className='px-6 py-3'>{processedSequence.sequence}</td>
             <td className='px-6 py-3'>
               <ul>
-                {Array.from(processedSequence.kmers).map(key =>
-                  <li className="inline border-2 border-blue-500 rounded-lg p-1.5 m-1.5" key={key}>{key}</li>)
-                }
+                {Array.from(processedSequence.kmers).map(key => <span key={key}><Kmer kmer={key} />{' '}</span>)}
               </ul>
             </td>
           </tr>

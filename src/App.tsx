@@ -34,8 +34,6 @@ function App() {
   const kmers = setUnion(...(processedSequences.map(processedSequence => processedSequence.kmers)));
 
   const eqvCls = getEquivalenceClasses(annotatedHops)
-  console.log(eqvCls)
-  // const unifiedHopMap = unifyHopMaps(processedSequences.map(seq => seq.hopMap))
   const keyedAnnotatedHops = getKeyedAnnotatedHops(annotatedHops)
 
   const GetStarted = () => (
@@ -74,6 +72,7 @@ function App() {
           <SequenceTable processedSequences={processedSequences} k={k} />
         </section>
         <section>
+          <h2 className="text-xl">pseudoalign a sequence(s)</h2>
           <Aligner k={k} keyedAnnotatedHops={keyedAnnotatedHops} />
         </section>
       </>}
