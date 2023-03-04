@@ -19,16 +19,10 @@ export default function Aligner({k, keyedAnnotatedHops}: Props) {
     setInputSequence('');
   }
 
-  const Form = () => <>
-    <input className="input m-2" value={inputSequence} onChange={(e) => setInputSequence(e.target.value)} />
-    <button className="btn btn-blue" onClick={onSubmit}>pseudoalign sequence</button>
-  </>
-
-  if (sequences.length === 0) { return <Form /> }
-
   return (
     <>
-      <Form />
+      <input className="input m-2" value={inputSequence} onChange={(e) => setInputSequence(e.target.value)} />
+      <button className="btn btn-blue" onClick={onSubmit}>pseudoalign sequence</button>
       {
         sequences.map(sequence => <SequenceAlignment k={k} keyedAnnotatedHops={keyedAnnotatedHops} sequence={sequence} key={sequence} />)
       }
