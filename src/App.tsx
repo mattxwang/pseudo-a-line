@@ -9,6 +9,7 @@ import EquivalenceClassCircles from './ui/EquivalenceClassCircles';
 import Aligner from './Aligner';
 
 const DEFAULT_SEQUENCE = "ACATGTCCAGTC";
+const DEFAULT_MULTIPLE_SEQUENCES = ["ACGGACGTAAA", "ACGGAGTAA", "GGACGTAAA", "GCTAAA"];
 
 function App() {
   const [k, setK] = useState<number>(3);
@@ -41,7 +42,7 @@ function App() {
       <button className='underline' onClick={() => addSequences([DEFAULT_SEQUENCE])}>{DEFAULT_SEQUENCE}</button>
       <br />
       or enter a series of sequences separated by semicolons, like{' '}
-      <button className='underline' onClick={() => addSequences([DEFAULT_SEQUENCE, DEFAULT_SEQUENCE.slice(3,8)])}>{`${DEFAULT_SEQUENCE}; ${DEFAULT_SEQUENCE.slice(3,8)}`}</button>
+      <button className='underline' onClick={() => addSequences(DEFAULT_MULTIPLE_SEQUENCES)}>{DEFAULT_MULTIPLE_SEQUENCES.join('; ')}</button>
     </section>
   );
 
