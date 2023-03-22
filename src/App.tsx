@@ -42,7 +42,7 @@ function App (): JSX.Element {
       start by adding a sequence, like{' '}
       <button className='underline' onClick={() => { addSequences([DEFAULT_SEQUENCE]) }}>{DEFAULT_SEQUENCE}</button>
       <br />
-      or enter a series of sequences separated by semicolons, like{' '}
+      or enter a series of sequences separated by semicolons, like<br />
       <button className='underline' onClick={() => { addSequences(DEFAULT_MULTIPLE_SEQUENCES) }}>{DEFAULT_MULTIPLE_SEQUENCES.join('; ')}</button>
     </section>
   )

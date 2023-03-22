@@ -41,7 +41,6 @@ const { href, title, body } = Astro.props;
 		border-radius: 0.35rem;
 		color: #111;
 		background-color: white;
-		opacity: 0.8;
 	}
 	h2 {
 		margin: 0;
@@ -59,5 +58,21 @@ const { href, title, body } = Astro.props;
 	}
 	.link-card:is(:hover, :focus-within) h2 {
 		color: rgb(var(--accent));
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.link-card {
+			background-color: #242424;
+			box-shadow: 0 4px 6px 2px rgba(56, 189, 248, 0.25), 0 2px 4px 2px rgba(56, 189, 248, 0.25);
+		}
+
+		.link-card > a {
+			background-color: inherit;
+			color: inherit;
+		}
+
+		p {
+			color: #ccc;
+		}
 	}
 </style>
