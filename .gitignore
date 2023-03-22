@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# generated types
+.astro/
+
+# environment variables
+.env
+.env.production
+
+.eslintcache

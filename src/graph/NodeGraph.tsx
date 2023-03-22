@@ -4,26 +4,26 @@ import ReactFlow, {
   MarkerType,
   Position,
   useNodesState,
-  useEdgesState,
-} from 'reactflow';
+  useEdgesState
+} from 'reactflow'
 
-import type { Edge, Node } from 'reactflow';
+import type { Edge, Node } from 'reactflow'
 
-import 'reactflow/dist/style.css';
-import type { AnnotatedHop } from '../util';
-import { edgeTypes } from '../util';
+import 'reactflow/dist/style.css'
+import type { AnnotatedHop } from '../util'
+import { edgeTypes } from '../util'
 
-function kmerToNode(kmer: string, i: number): Node<{label: string}> {
+function kmerToNode (kmer: string, i: number): Node<{ label: string }> {
   return ({
     id: kmer,
     position: { x: i * 100, y: (i % 4) * 25 + i * 10 },
     data: { label: kmer },
     sourcePosition: Position.Right,
-    targetPosition: Position.Left,
-  });
+    targetPosition: Position.Left
+  })
 }
 
-function annotatedHopToEdge(source: string, target: string, seqs: number[]) : Edge<{seqs: number[]}> {
+function annotatedHopToEdge (source: string, target: string, seqs: number[]): Edge<{ seqs: number[] }> {
   return ({
     id: `${source}-${target}`,
     source,
@@ -31,28 +31,28 @@ function annotatedHopToEdge(source: string, target: string, seqs: number[]) : Ed
     markerEnd: {
       type: MarkerType.ArrowClosed,
       height: 10,
-      width: 10,
+      width: 10
     },
     style: {
-      strokeWidth: 2,
+      strokeWidth: 2
     },
     data: {
-      seqs,
+      seqs
     },
-    type: 'custom',
-  });
+    type: 'custom'
+  })
 }
 
-type Props = {
-  annotatedHops: AnnotatedHop[],
-  kmers: Set<string>,
+interface Props {
+  annotatedHops: AnnotatedHop[]
+  kmers: Set<string>
 }
 
-export default function NodeGraph({annotatedHops, kmers}: Props) {
-  const kmerNodes = Array.from(kmers).map(kmerToNode);
-  const hopEdges = annotatedHops.map(({source, target, seqs}) => annotatedHopToEdge(source, target, seqs));
-  const [nodes,, onNodesChange] = useNodesState(kmerNodes);
-  const [edges,, onEdgesChange] = useEdgesState(hopEdges);
+export default function NodeGraph ({ annotatedHops, kmers }: Props): JSX.Element {
+  const kmerNodes = Array.from(kmers).map(kmerToNode)
+  const hopEdges = annotatedHops.map(({ source, target, seqs }) => annotatedHopToEdge(source, target, seqs))
+  const [nodes,, onNodesChange] = useNodesState(kmerNodes)
+  const [edges,, onEdgesChange] = useEdgesState(hopEdges)
   return (
   <ReactFlow
       nodes={nodes}
@@ -63,10 +63,10 @@ export default function NodeGraph({annotatedHops, kmers}: Props) {
       fitView
       // note: if we ever make money from this, we should remove this;
       // see: https://reactflow.dev/docs/guides/remove-attribution/
-      proOptions={{hideAttribution: true}}
+      proOptions={{ hideAttribution: true }}
     >
       <Controls />
     <Background />
   </ReactFlow>
-  );
+  )
 }

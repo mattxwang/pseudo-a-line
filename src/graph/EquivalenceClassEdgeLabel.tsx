@@ -1,7 +1,7 @@
-import { FC } from 'react';
-import { EdgeProps, getBezierPath, EdgeLabelRenderer } from 'reactflow';
-import EquivalenceClassCircles from '../ui/EquivalenceClassCircles';
-import { getSequenceColor } from '../util';
+import type { FC } from 'react'
+import type { EdgeProps } from 'reactflow'
+import { getBezierPath, EdgeLabelRenderer } from 'reactflow'
+import EquivalenceClassCircles from '../ui/EquivalenceClassCircles'
 
 const CustomEdge: FC<EdgeProps> = ({
   id,
@@ -11,7 +11,7 @@ const CustomEdge: FC<EdgeProps> = ({
   targetY,
   sourcePosition,
   targetPosition,
-  data,
+  data
 }) => {
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
@@ -19,10 +19,10 @@ const CustomEdge: FC<EdgeProps> = ({
     sourcePosition,
     targetX,
     targetY,
-    targetPosition,
-  });
+    targetPosition
+  })
 
-  const seqs: number[] = data.seqs;
+  const seqs: number[] = data.seqs
 
   return (
     <>
@@ -30,14 +30,16 @@ const CustomEdge: FC<EdgeProps> = ({
       <EdgeLabelRenderer>
         <div style={{
           position: 'absolute',
+          // TODO: fix this type with getBezierPath?
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-          fontSize: 10,
+          fontSize: 10
         }}>
           <EquivalenceClassCircles seqs={seqs}/>
         </div>
       </EdgeLabelRenderer>
     </>
-  );
-};
+  )
+}
 
-export default CustomEdge;
+export default CustomEdge

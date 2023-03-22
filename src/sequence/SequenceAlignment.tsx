@@ -1,24 +1,24 @@
-import EquivalenceClassCircles from "../ui/EquivalenceClassCircles";
-import Kmer from "../ui/Kmer";
-import type { KeyedAnnotatedHops } from "../util";
-import { getOrderedKmers, setIntersection } from "../util";
+import EquivalenceClassCircles from '../ui/EquivalenceClassCircles'
+import Kmer from '../ui/Kmer'
+import type { KeyedAnnotatedHops } from '../util'
+import { getOrderedKmers, setIntersection } from '../util'
 
-type Props = {
-  k: number,
-  keyedAnnotatedHops: KeyedAnnotatedHops,
-  sequence: string,
+interface Props {
+  k: number
+  keyedAnnotatedHops: KeyedAnnotatedHops
+  sequence: string
 }
 
-export default function SequenceAlignment({k, keyedAnnotatedHops, sequence}: Props) {
+export default function SequenceAlignment ({ k, keyedAnnotatedHops, sequence }: Props): JSX.Element {
   const sequenceKmers = getOrderedKmers(sequence, k)
-  const hopPairs = [];
+  const hopPairs = []
 
-  for (let i = 0; i < sequenceKmers.length - 1; i ++) {
-    hopPairs.push(getEqvClassPairs(sequenceKmers[i], sequenceKmers[i+1], keyedAnnotatedHops))
+  for (let i = 0; i < sequenceKmers.length - 1; i++) {
+    hopPairs.push(getEqvClassPairs(sequenceKmers[i], sequenceKmers[i + 1], keyedAnnotatedHops))
   }
 
   const totalAlignment = Array.from(setIntersection(
-    ...(hopPairs.map(({seqs}) => {
+    ...(hopPairs.map(({ seqs }) => {
       return new Set<number>(seqs)
     })))
   )
@@ -30,7 +30,7 @@ export default function SequenceAlignment({k, keyedAnnotatedHops, sequence}: Pro
     <hr />
     <ol>
       {
-        hopPairs.map(({sourceKmer, targetKmer, seqs}) => {
+        hopPairs.map(({ sourceKmer, targetKmer, seqs }) => {
           return <li className="my-3" key={`${sourceKmer}-${targetKmer}`}>
             <Kmer kmer={sourceKmer}/> {'->'} <Kmer kmer={targetKmer} /> {'-> '}
             <EquivalenceClassCircles seqs={seqs} />
@@ -41,15 +41,15 @@ export default function SequenceAlignment({k, keyedAnnotatedHops, sequence}: Pro
   </div>
 }
 
-function getEqvClassPairs(sourceKmer: string, targetKmer: string, keyedAnnotatedHops: KeyedAnnotatedHops) {
+function getEqvClassPairs (sourceKmer: string, targetKmer: string, keyedAnnotatedHops: KeyedAnnotatedHops): { sourceKmer: string, targetKmer: string, seqs: number[] } {
   if (!(sourceKmer in keyedAnnotatedHops)) {
-    return {sourceKmer, targetKmer, seqs: []}
+    return { sourceKmer, targetKmer, seqs: [] }
   }
-  for (let obj of keyedAnnotatedHops[sourceKmer]) {
+  for (const obj of keyedAnnotatedHops[sourceKmer]) {
     if (obj.target === targetKmer) {
-      return {sourceKmer, targetKmer, seqs: obj.seqs}
+      return { sourceKmer, targetKmer, seqs: obj.seqs }
     }
   }
 
-  return {sourceKmer, targetKmer, seqs: []}
+  return { sourceKmer, targetKmer, seqs: [] }
 }

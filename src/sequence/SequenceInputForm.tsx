@@ -1,33 +1,32 @@
 import { useState } from 'react'
 
-type Props = {
-  k: number;
-  setK: (k: number) => void;
-  addSequences: (seq: string[]) => void;
+interface Props {
+  k: number
+  setK: (k: number) => void
+  addSequences: (seq: string[]) => void
 }
 
+export default function SequenceInputForm ({ k, setK, addSequences }: Props): JSX.Element {
+  const [sequence, setSequence] = useState<string>('')
 
-export default function SequenceInputForm({k, setK, addSequences}: Props) {
-  const [sequence, setSequence] = useState<string>('');
-
-  function onKChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const val = Number(e.target.value);
+  function onKChange (e: React.ChangeEvent<HTMLInputElement>): void {
+    const val = Number(e.target.value)
     if (val < 1) {
-      return;
+      return
     }
-    setK(val);
+    setK(val)
   }
 
-  function onSequenceChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setSequence(e.target.value);
+  function onSequenceChange (e: React.ChangeEvent<HTMLInputElement>): void {
+    setSequence(e.target.value)
   }
 
-  function onSubmit(){
+  function onSubmit (): void {
     const parsed = sequence
       .split(';')
       .map(seq => seq.replace(/\W/g, '').toUpperCase())
-    addSequences(parsed);
-    setSequence('');
+    addSequences(parsed)
+    setSequence('')
   }
 
   return (

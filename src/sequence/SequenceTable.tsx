@@ -1,12 +1,12 @@
-import Kmer from '../ui/Kmer';
-import type { ProcessedSequence } from '../util';
+import Kmer from '../ui/Kmer'
+import type { ProcessedSequence } from '../util'
 
-type Props = {
-  k: number,
-  processedSequences: ProcessedSequence[],
+interface Props {
+  k: number
+  processedSequences: ProcessedSequence[]
 }
 
-export default function SequenceTable({k, processedSequences}: Props){
+export default function SequenceTable ({ k, processedSequences }: Props): JSX.Element {
   return (
     <table className='text-left border-spacing-8 overflow-x-auto block max-w-fit'>
       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -18,7 +18,7 @@ export default function SequenceTable({k, processedSequences}: Props){
       </thead>
       <tbody>
         {processedSequences.map((processedSequence, i) =>
-          <tr className='border-b dark:border-gray-700' key={processedSequence.sequence + i}>
+          <tr className='border-b dark:border-gray-700' key={`${processedSequence.sequence}${i}`}>
             <td className='px-6 py-3'>{i + 1}</td>
             <td className='px-6 py-3'>{processedSequence.sequence}</td>
             <td className='px-6 py-3'>
