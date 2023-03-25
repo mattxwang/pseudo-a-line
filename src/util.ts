@@ -128,6 +128,26 @@ export function getKmers (sequence: string, k: number): { kmers: Set<string>, ho
   }
 }
 
+/**
+ * take in a sequence and k, returns kmers in the order that they're discovered
+ * @param {string} sequence input sequence; length should be >= k
+ * @param {number} k
+ * @returns array of kmers
+ */
+export function getKmersOrdered (sequence: string, k: number): string[] {
+  if (sequence.length < k) return []
+
+  const res = []
+
+  let current = sequence.substring(0, k)
+  for (let i = 1; i < (sequence.length - k) + 2; i++) {
+    res.push(current)
+    current = sequence.substring(i, i + k)
+  }
+
+  return res
+}
+
 export function getKeyedAnnotatedHops (hops: AnnotatedHop[]): KeyedAnnotatedHops {
   const res: KeyedAnnotatedHops = {}
   for (const hop of hops) {
