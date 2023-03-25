@@ -34,7 +34,7 @@ export default function SequenceInputForm ({ k, setK, addSequences }: Props): JS
       <input className="input m-2" value={k} type="number" onChange={onKChange} />
       <button className="btn btn-blue mr-4" onClick={onSubmit}>set k</button>
       <input className="input m-2" value={sequence} onChange={onSequenceChange} />
-      <button className="btn btn-blue" onClick={onSubmit}>add sequence</button>
+      <button className="btn btn-blue" onClick={onSubmit}>add transcriptome</button>
     </div>
   )
 }

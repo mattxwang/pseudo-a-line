@@ -171,3 +171,14 @@ export function setUnion<T> (...sets: Array<Set<T>>): Set<T> {
   // TODO: this is inefficient
   return new Set(Array.from(sets).map(set => Array.from(set)).flat())
 }
+
+/**
+ * reverses a string; from https://eddmann.com/posts/ten-ways-to-reverse-a-string-in-javascript/
+ * @param s
+ * @returns
+ */
+export const reverse = (s: string): string => {
+  let o = ''
+  for (let i = s.length - 1; i >= 0; o += s[i--]) { /* empty */ }
+  return o
+}

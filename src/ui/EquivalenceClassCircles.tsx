@@ -8,7 +8,7 @@ interface Props {
 
 export default function EquivalenceClassCircles ({ classes, offset, seqs }: Props): JSX.Element {
   if (seqs.length === 0) {
-    return <>{'none :('}</>
+    return <span className={`seq-circle ${classes ?? ''} bg-black`} >0</span>
   }
 
   const spacing = offset ?? 8

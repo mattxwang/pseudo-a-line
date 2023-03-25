@@ -39,10 +39,10 @@ function App (): JSX.Element {
 
   const GetStarted = (): JSX.Element => (
     <section className='text-center'>
-      start by adding a sequence, like{' '}
+      start by adding a transcriptome, like{' '}
       <button className='underline' onClick={() => { addSequences([DEFAULT_SEQUENCE]) }}>{DEFAULT_SEQUENCE}</button>
       <br />
-      or enter a series of sequences separated by semicolons, like<br />
+      or enter a series of transcriptomes separated by semicolons, like<br />
       <button className='underline' onClick={() => { addSequences(DEFAULT_MULTIPLE_SEQUENCES) }}>{DEFAULT_MULTIPLE_SEQUENCES.join('; ')}</button>
     </section>
   )
@@ -71,11 +71,11 @@ function App (): JSX.Element {
         <section>
           <h2 className="text-xl">equivalence classes</h2>
           <EquivalenceClasses />
-          <h2 className="text-xl mb-1.5">sequence library</h2>
+          <h2 className="text-xl mb-1.5">transcriptome library</h2>
           <SequenceTable processedSequences={processedSequences} k={k} />
         </section>
         <section>
-          <h2 className="text-xl">pseudoalign a sequence(s)</h2>
+          <h2 className="text-xl">pseudoalign a read(s)</h2>
           <Aligner k={k} keyedAnnotatedHops={keyedAnnotatedHops} />
         </section>
       </>}
