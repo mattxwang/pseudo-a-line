@@ -1,7 +1,7 @@
 import EquivalenceClassCircles from '../ui/EquivalenceClassCircles'
 import Kmer from '../ui/Kmer'
 import type { KeyedAnnotatedHops } from '../util'
-import { getOrderedKmers, setIntersection, reverse } from '../util'
+import { complement, getOrderedKmers, setIntersection, reverse } from '../util'
 
 interface Props {
   k: number
@@ -12,7 +12,7 @@ interface Props {
 
 export default function SequenceAlignment ({ k, keyedAnnotatedHops, reversed, sequence }: Props): JSX.Element {
   const isReversed = (reversed ?? false)
-  const searchSequence = isReversed ? reverse(sequence) : sequence
+  const searchSequence = isReversed ? complement(reverse(sequence)) : sequence
   const sequenceKmers = getOrderedKmers(searchSequence, k)
   const hopPairs = []
 
@@ -31,7 +31,7 @@ export default function SequenceAlignment ({ k, keyedAnnotatedHops, reversed, se
       <span>
         {searchSequence} {'-> '} <EquivalenceClassCircles seqs={totalAlignment.map(n => Number(n)).flat()}/>
       </span>
-      <span>{isReversed ? 'rev' : 'fwd'}</span>
+      <span>{isReversed ? 'rev + compl' : 'forward'}</span>
     </h3>
     <hr />
     <ol>

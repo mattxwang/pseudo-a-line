@@ -202,3 +202,21 @@ export const reverse = (s: string): string => {
   for (let i = s.length - 1; i >= 0; o += s[i--]) { /* empty */ }
   return o
 }
+
+// TODO: encode the A/C/T/G thing in types
+/**
+ * complements a string, returning in uppercase
+ * non-ACTG elements are skipped
+ * @param s string to complement
+ */
+export const complement = (s: string): string => {
+  return s.toUpperCase().split('').map(c => {
+    switch (c) {
+      case 'A': return 'T'
+      case 'T': return 'A'
+      case 'C': return 'G'
+      case 'G': return 'C'
+      default: return ''
+    }
+  }).join('')
+}

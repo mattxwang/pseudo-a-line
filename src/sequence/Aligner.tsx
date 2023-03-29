@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import SequenceAlignment from './SequenceAlignment'
 import type { KeyedAnnotatedHops } from '../util'
-
-const DEFAULT_SEQUENCES = ['GGACGT', 'AAATGC']
+// TTTACG
+const DEFAULT_SEQUENCES = ['GGACGT', 'TTTACG']
 
 interface Props {
   k: number
