@@ -160,18 +160,6 @@ export function getKeyedAnnotatedHops (hops: AnnotatedHop[]): KeyedAnnotatedHops
   return res
 }
 
-export function getOrderedKmers (sequence: string, k: number): string[] {
-  const kmers = []
-  let current = sequence.substring(0, k)
-  for (let i = 1; i < (sequence.length - k) + 2; i++) {
-    kmers.push(current)
-    const next = sequence.substring(i, i + k)
-    current = next
-  }
-
-  return kmers
-}
-
 export function getSequenceColor (i: number): string {
   const l = SEQUENCE_COLORS.length
   return SEQUENCE_COLORS[i % l]
